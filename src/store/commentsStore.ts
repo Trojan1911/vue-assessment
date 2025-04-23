@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue'
-import type { Comment, CommentPayload } from '@/types/types.ts'
+import type { Comment, CommentPayload, PostCommentResponse } from '@/types/types.ts'
 import { fetchComments, postComment } from '@/clients/commentsClient.ts'
 
 import { defineStore } from 'pinia'
@@ -26,8 +26,8 @@ export const useCommentsStore = defineStore('comments', () => {
     localStorage.setItem('userComments', JSON.stringify(userComments.value))
   }
 
-  const postAndSaveComment = async (commentPayload: CommentPayload) => {
-    const response = await postComment(commentPayload)
+  const postAndSaveComment = async (commentPayload: CommentPayload): Promise<void> => {
+    const response: PostCommentResponse = await postComment(commentPayload)
     const newComment: Comment = {
       id: response.id,
       email: response.email,
@@ -55,15 +55,11 @@ export const useCommentsStore = defineStore('comments', () => {
     }
   }
 
-  const allComments = computed(() => [
-    ...userComments.value,
-    ...comments.value
-  ])
+  const allComments = computed(() => [...userComments.value, ...comments.value])
 
   getUserComments()
 
   return {
-    comments,
     userComments,
     allComments,
     isLoading,
