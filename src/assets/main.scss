@@ -5,3 +5,7 @@ body {
   background: $primary;
   box-sizing: border-box;
 }
+
+.custom-card {
+  background: darken($primary, 1%);
+}

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import CommentForm from '@/components/CommentForm.vue'
+import CommentsPage from '@/components/CommentsPage.vue'
 </script>
 
 <template>
-  <div class="container p-4">
+  <div class="container py-5">
     <div class="row justify-content-center">
-      <CommentForm />
+      <div class="col-12 col-md-8 col lg-6">
+        <CommentsPage />
+      </div>
     </div>
   </div>
 </template>

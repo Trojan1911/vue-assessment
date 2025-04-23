@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useModelValueHandler } from '@/composables/useModelValueHandler.ts'
+
 interface textAreaProps {
   textareaId: string
   isRequired?: boolean
@@ -12,6 +14,10 @@ const props = withDefaults(defineProps<textAreaProps>(), {
   placeholder: 'Put text here...',
   rows: 4,
 })
+
+const emit = defineEmits(['update:modelValue'])
+
+const { handleInputChange } =  useModelValueHandler(emit)
 </script>
 
 <template>
@@ -23,7 +29,8 @@ const props = withDefaults(defineProps<textAreaProps>(), {
       class="form-control"
       :id="props.textareaId"
       :rows="props.rows"
-    ></textarea>
+      @input="handleInputChange"
+    />
   </div>
 </template>
 
