@@ -11,7 +11,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-for="comment in commentsStore.comments" :key="comment.id" class="card my-2 col-12">
+  <div v-for="comment in commentsStore.allComments" :key="comment.id" class="card my-2 col-12">
     <div class="card-header">
       {{ comment.name }}
     </div>

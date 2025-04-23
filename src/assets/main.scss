@@ -23,3 +23,7 @@ body {
   background: lighten($magenta-team, 10%);
   color: #fff;
 }
+
+.btn-magenta:disabled {
+  background: darken($magenta-team, 10%);
+}

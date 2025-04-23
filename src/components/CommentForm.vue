@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { postComment } from '@/clients/commentsClient.ts'
+import { useComments } from '@/composables/useComments.ts'
+
 import type { CommentPayload } from '@/types/types.ts'
 
 import FormInput from '@/components/UI/FormInput.vue'
 import FormTextarea from '@/components/UI/FormTextarea.vue'
+
+const {toggleFormVisibility, postComment} = useComments()
 
 const formFields = ref<CommentPayload>({
   name: '',
@@ -17,8 +20,8 @@ const formKey = ref<number>(1)
 
 const handleSubmit = async (): Promise<void> => {
   try {
-    await postComment(formFields.value)
-    formKey.value++
+    await postComment(formFields.value);
+    toggleFormVisibility();
   } catch (error) {
     console.log(error)
   }

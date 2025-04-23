@@ -1,26 +1,31 @@
 <script setup lang="ts">
 import CommentForm from '@/components/CommentForm.vue'
-import { ref } from 'vue'
 import CommentsList from '@/components/CommentsList.vue'
+import { useComments } from '@/composables/useComments.ts'
 
-const commentFormVisible = ref(false)
-
-const toggleFormVisibility = () => {
-  commentFormVisible.value = !commentFormVisible.value
-}
+const { toggleFormVisibility, commentsFormVisible, userComments } = useComments()
 </script>
 
 <template>
   <div class="d-flex flex-column align-items-center gap-3">
-    <button @click="toggleFormVisibility" type="button" class="btn btn-magenta">
+    <button
+      :disabled="userComments.length > 0"
+      @click="toggleFormVisibility"
+      type="button"
+      class="btn btn-magenta"
+    >
       Add your comment
     </button>
 
+    <div v-if="userComments.length > 0" class="alert alert-light" role="alert">
+      You already commented this. Only one comment per user allowed.
+    </div>
+
     <transition name="fade-slide">
-      <CommentForm v-if="commentFormVisible" />
+      <CommentForm v-if="commentsFormVisible" />
     </transition>
 
-    <CommentsList/>
+    <CommentsList />
   </div>
 </template>
 
