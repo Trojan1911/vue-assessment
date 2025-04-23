@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 $primary: #fceff9;
+$magenta-team: #e20074;
+
 body {
   font-family: "Roboto", sans-serif;
   background: $primary;
@@ -8,4 +10,16 @@ body {
 
 .custom-card {
   background: darken($primary, 1%);
+}
+
+.btn-magenta {
+  background: $magenta-team;
+  color: #fff;
+}
+
+.btn-magenta:hover,
+.btn-magenta:active,
+.btn-magenta:active:focus {
+  background: lighten($magenta-team, 10%);
+  color: #fff;
 }
