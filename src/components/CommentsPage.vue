@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import CommentForm from '@/components/CommentForm.vue'
 import { ref } from 'vue'
+import CommentsList from '@/components/CommentsList.vue'
 
 const commentFormVisible = ref(false)
 
@@ -18,6 +19,8 @@ const toggleFormVisibility = () => {
     <transition name="fade-slide">
       <CommentForm v-if="commentFormVisible" />
     </transition>
+
+    <CommentsList/>
   </div>
 </template>
 

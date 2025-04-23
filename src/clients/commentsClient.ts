@@ -1,6 +1,6 @@
-import type { CommentsResponse, CommentPayload } from '@/types/types.ts'
+import type { Comment, CommentPayload } from '@/types/types.ts'
 
-export const fetchComments = async (): Promise<CommentsResponse[]> => {
+export const fetchComments = async (): Promise<Comment[]> => {
   const response = await fetch('https://jsonplaceholder.typicode.com/comments')
 
   if (!response.ok) {
