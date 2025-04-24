@@ -1,10 +1,10 @@
 import { ref, computed } from 'vue'
 import type { Comment, CommentPayload, PostCommentResponse } from '@/types/types.ts'
-import { callApi } from '@/clients/commentsClient.ts'
+import { callApi } from '@/clients/apiClient.ts'
 
 import { defineStore } from 'pinia'
 
-const commentsUrl: string = 'https://jsonplaceholder.typicode.com/comments' // Declared here, because i have one API url for fetching and posting comments. Potentialy, if app will grow and we want to have generic functions in client, worth to put it in separate url const file
+const commentsUrl: string = 'https://jsonplaceholder.typicode.com/comments' // Declared here, because i have one API url for fetching and posting comments. Potentially, if app will grow and we want to have generic functions in client, worth to put it in separate url const file
 
 
 export const useCommentsStore = defineStore('comments', () => {
@@ -30,7 +30,7 @@ export const useCommentsStore = defineStore('comments', () => {
   }
 
   const postAndSaveComment = async (commentPayload: CommentPayload): Promise<void> => {
-    const response: PostCommentResponse = await callApi(commentsUrl, {
+    const response: PostCommentResponse = await callApi<PostCommentResponse>(commentsUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -39,6 +39,7 @@ export const useCommentsStore = defineStore('comments', () => {
       body: commentPayload.comment,
     }),
   })
+
     const newComment: Comment = {
       id: response.id,
       email: response.email,
