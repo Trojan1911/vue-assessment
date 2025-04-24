@@ -66,7 +66,7 @@ export const useCommentsStore = defineStore('comments', () => {
     try {
       const data = await callApi<Comment[]>(commentsUrl)
 
-      comments.value = data.reverse().slice(0, 10) // simplest way to display comments from the newest - ID is from 1 to 500 and after posting is 501 so it means that the last ID is the newest comment. There is no Date data saved on API
+      comments.value = data.reverse().slice(0, 10) // simplest way to display comments from the recent and get last ten - reverse the array and slice ten elements. I really know that is simple, but its working :P ID is from 1 to 500 and after posting is 501 so it means that the last ID is the newest comment. There is no Date data saved on API
     } catch (e) {
       fetchCommentsError.value = `Could not fetch. ${e}`
     } finally {

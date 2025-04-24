@@ -4,12 +4,14 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
- message: 'Something went wrong.'
+  message: 'Something went wrong.',
 })
+
+const { message } = props
 </script>
 
 <template>
   <div class="alert alert-danger" role="alert">
-    {{ props.message }}
+    {{ message }}
   </div>
 </template>

@@ -13,9 +13,11 @@ defineProps<Props>()
     <div class="card-header">
       {{ comment.name }}
     </div>
+
     <div class="card-body">
       <div class="blockquote mb-0">
         <p>{{ comment.body }}</p>
+
         <footer class="blockquote-footer">
           {{ comment.email }}
         </footer>
