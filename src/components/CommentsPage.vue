@@ -5,8 +5,16 @@ import { useComments } from '@/composables/useComments.ts'
 import { onMounted } from 'vue'
 import ErrorAlert from '@/components/UI/ErrorAlert.vue'
 
-const { toggleFormVisibility, commentsFormVisible, userComments, fetchComments, allComments, fetchCommentsError, getUserComments } =
-  useComments()
+const {
+  toggleFormVisibility,
+  commentsFormVisible,
+  userComments,
+  fetchComments,
+  allComments,
+  fetchCommentsError,
+  getUserComments,
+  isLoading,
+} = useComments()
 
 onMounted(() => {
   fetchComments()
@@ -22,7 +30,7 @@ onMounted(() => {
       type="button"
       class="btn btn-magenta"
     >
-      {{commentsFormVisible ? 'Cancel' : 'Add your comment'}}
+      {{ commentsFormVisible ? 'Cancel' : 'Add your comment' }}
     </button>
 
     <div v-if="userComments.length > 0" class="alert alert-light" role="alert">
@@ -33,7 +41,19 @@ onMounted(() => {
       <CommentForm v-if="commentsFormVisible" />
     </transition>
 
+    <div v-if="allComments.length === 0 && !fetchCommentsError && isLoading" class="spinner-border text-magenta" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+
     <ErrorAlert class="my-2 text-center" v-if="fetchCommentsError" :message="fetchCommentsError" />
+
+    <div
+      v-if="!fetchCommentsError && allComments.length === 0 && !isLoading"
+      class="alert alert-light"
+      role="alert"
+    >
+      There is no comments yet
+    </div>
 
     <CommentsList :comments="allComments" />
   </div>

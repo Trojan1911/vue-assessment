@@ -9,10 +9,6 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div v-if="comments.length === 0" class="alert alert-light" role="alert">
-    There is no comments yet
-  </div>
-
   <div v-for="comment in comments" :key="comment.id" class="card my-2 col-12">
     <div class="card-header">
       {{ comment.name }}
