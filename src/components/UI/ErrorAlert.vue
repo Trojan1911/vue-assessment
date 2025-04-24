@@ -13,7 +13,3 @@ const props = withDefaults(defineProps<Props>(), {
     {{ props.message }}
   </div>
 </template>
-
-<style scoped>
-
-</style>

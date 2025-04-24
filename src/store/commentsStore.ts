@@ -55,7 +55,6 @@ export const useCommentsStore = defineStore('comments', () => {
       saveUserCommentsLocally()
     } catch (e) {
       postCommentError.value = `Could not save comment. ${e}`
-      commentsFormVisible.value = true
       localStorage.removeItem('userComments');
       commentsFormVisible.value = true
     }

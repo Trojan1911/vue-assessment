@@ -17,8 +17,6 @@ const formFields = ref<CommentPayload>({
   comment: '',
 })
 
-const formKey = ref<number>(1)
-
 const handleSubmit = async (): Promise<void> => {
     await postComment(formFields.value);
 }
@@ -29,13 +27,13 @@ const handleSubmit = async (): Promise<void> => {
     <div class="card-header">Please, be kind and respect the others</div>
 
     <div class="card-body">
-      <form :key="formKey" @submit.prevent="handleSubmit">
+      <form @submit.prevent="handleSubmit">
         <FormInput
           v-model="formFields.email"
           input-id="email"
           label="E-mail:"
-          type="email"
-          isRequired
+          input-type="email"
+          is-required
           placeholder="name@example.com"
         />
 
@@ -43,9 +41,9 @@ const handleSubmit = async (): Promise<void> => {
           v-model="formFields.name"
           input-id="name"
           label="Name:"
-          type="text"
+          input-type="text"
           placeholder="name"
-          isRequired
+          is-required
         />
 
         <FormTextarea
@@ -53,7 +51,7 @@ const handleSubmit = async (): Promise<void> => {
           textarea-id="message"
           label="Comment:"
           placeholder="Put your comment here..."
-          isRequired
+          is-required
         />
 
         <div class="d-flex justify-content-center">

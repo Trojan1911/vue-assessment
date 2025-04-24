@@ -2,11 +2,12 @@
 import { useModelValueHandler } from '@/composables/useModelValueHandler.ts'
 
 interface textAreaProps {
-  textareaId: string
-  isRequired?: boolean
-  label: string
-  placeholder?: string
-  rows?: number
+  textareaId: string;
+  isRequired?: boolean;
+  modelValue: string;
+  label: string;
+  placeholder?: string;
+  rows?: number;
 }
 
 const props = withDefaults(defineProps<textAreaProps>(), {
@@ -22,9 +23,10 @@ const { handleInputChange } =  useModelValueHandler(emit)
 
 <template>
   <div class="my-2">
-    <label :for="props.textareaId" class="form-label fw-bold"> {{ label }} </label>
+    <label :for="props.textareaId" class="form-label fw-bold"> {{ props.label }} </label>
     <textarea
-      :placeholder="placeholder"
+      :value="props.modelValue"
+      :placeholder="props.placeholder"
       :required="props.isRequired"
       class="form-control"
       :id="props.textareaId"
@@ -33,5 +35,3 @@ const { handleInputChange } =  useModelValueHandler(emit)
     />
   </div>
 </template>
-
-<style scoped></style>

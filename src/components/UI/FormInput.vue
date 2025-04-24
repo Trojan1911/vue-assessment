@@ -5,7 +5,6 @@ interface InputProps {
   inputType?: string
   inputId: string
   isRequired?: boolean
-  validationRules?: string[]
   label: string
   placeholder?: string
   modelValue: string
@@ -20,10 +19,11 @@ const { handleInputChange } =  useModelValueHandler(emit)
 <template>
   <div class="my-2">
     <label :for="props.inputId" class="form-label fw-bold">
-      {{ label }}
+      {{ props.label }}
     </label>
 
     <input
+      :value="modelValue"
       :id="props.inputId"
       :placeholder="placeholder"
       :required="props.isRequired"
@@ -33,5 +33,3 @@ const { handleInputChange } =  useModelValueHandler(emit)
     />
   </div>
 </template>
-
-<style scoped></style>

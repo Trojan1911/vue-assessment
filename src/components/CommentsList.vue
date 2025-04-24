@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import type { Comment } from '../types/types.ts'
-import ErrorAlert from '@/components/UI/ErrorAlert.vue'
-import { useComments } from '@/composables/useComments.ts'
-
-const { fetchCommentsError } = useComments()
-
 
 interface Props {
   comments: Comment[];
@@ -14,8 +9,6 @@ defineProps<Props>()
 </script>
 
 <template>
-  <ErrorAlert class="my-2 text-center" v-if="fetchCommentsError" :message="fetchCommentsError" />
-
   <div v-if="comments.length === 0" class="alert alert-light" role="alert">
     There is no comments yet
   </div>
@@ -25,12 +18,12 @@ defineProps<Props>()
       {{ comment.name }}
     </div>
     <div class="card-body">
-      <blockquote class="blockquote mb-0">
+      <div class="blockquote mb-0">
         <p>{{ comment.body }}</p>
         <footer class="blockquote-footer">
           {{ comment.email }}
         </footer>
-      </blockquote>
+      </div>
     </div>
   </div>
 </template>
