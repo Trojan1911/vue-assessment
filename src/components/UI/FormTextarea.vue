@@ -4,7 +4,6 @@ import { useModelValueHandler } from '@/composables/useModelValueHandler.ts'
 interface textAreaProps {
   textareaId: string;
   isRequired?: boolean;
-  modelValue: string;
   label: string;
   placeholder?: string;
   rows?: number;
@@ -16,7 +15,7 @@ const props = withDefaults(defineProps<textAreaProps>(), {
   rows: 4,
 })
 
-const { label, textareaId, placeholder, isRequired, rows, modelValue } = props
+const { label, textareaId, placeholder, isRequired, rows } = props
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -27,7 +26,6 @@ const { handleInputChange } =  useModelValueHandler(emit)
   <div class="my-2">
     <label :for="textareaId" class="form-label fw-bold"> {{ label }} </label>
     <textarea
-      :value="modelValue"
       :placeholder="placeholder"
       :required="isRequired"
       class="form-control"

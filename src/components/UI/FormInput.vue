@@ -7,7 +7,6 @@ interface InputProps {
   isRequired?: boolean
   label: string
   placeholder?: string
-  modelValue: string
 }
 
 const props = withDefaults(defineProps<InputProps>(),{
@@ -16,7 +15,7 @@ const props = withDefaults(defineProps<InputProps>(),{
   placeholder: '',
 })
 
-const { label, inputId, placeholder, isRequired, inputType, modelValue } = props
+const { label, inputId, placeholder, isRequired, inputType } = props
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -30,7 +29,6 @@ const { handleInputChange } = useModelValueHandler(emit)
     </label>
 
     <input
-      :value="modelValue"
       :id="inputId"
       :placeholder="placeholder"
       :required="isRequired"
