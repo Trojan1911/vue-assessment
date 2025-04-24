@@ -1,8 +1,11 @@
 import { ref, computed } from 'vue'
 import type { Comment, CommentPayload, PostCommentResponse } from '@/types/types.ts'
-import { fetchComments, postComment } from '@/clients/commentsClient.ts'
+import { callApi } from '@/clients/commentsClient.ts'
 
 import { defineStore } from 'pinia'
+
+const commentsUrl: string = 'https://jsonplaceholder.typicode.com/comments' // Declared here, because i have one API url for fetching and posting comments. Potentialy, if app will grow and we want to have generic functions in client, worth to put it in separate url const file
+
 
 export const useCommentsStore = defineStore('comments', () => {
   const comments = ref<Comment[]>([])
@@ -27,7 +30,15 @@ export const useCommentsStore = defineStore('comments', () => {
   }
 
   const postAndSaveComment = async (commentPayload: CommentPayload): Promise<void> => {
-    const response: PostCommentResponse = await postComment(commentPayload)
+    const response: PostCommentResponse = await callApi(commentsUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: commentPayload.name,
+      email: commentPayload.email,
+      body: commentPayload.comment,
+    }),
+  })
     const newComment: Comment = {
       id: response.id,
       email: response.email,
@@ -45,7 +56,7 @@ export const useCommentsStore = defineStore('comments', () => {
     fetchCommentsError.value = null
 
     try {
-      const data = await fetchComments()
+      const data = await callApi<Comment[]>(commentsUrl)
 
       comments.value = data.reverse() // simplest way to display comments from the newest - ID is from 1 to 500 and after posting is 501 so it means that the last ID is the newest comment. There is no Date data saved on API
     } catch (e) {

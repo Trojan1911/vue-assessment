@@ -1,29 +1,13 @@
-import type { Comment, CommentPayload, PostCommentResponse } from '@/types/types.ts'
-
-export const fetchComments = async (): Promise<Comment[]> => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/comments')
+export const callApi = async <T>(url: string, options?: RequestInit): Promise<T> => {
+  const response = await fetch(url, options)
 
   if (!response.ok) {
-    throw new Error(`Error fetching data: ${response.status}`)
+    throw new Error(`Something went wrong. Error status: ${response.status}`)
   }
 
-  return response.json()
+  const data: unknown = await response.json()
+
+  return data as T
 }
 
-export const postComment = async (payload: CommentPayload): Promise<PostCommentResponse> => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/comments', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: payload.name,
-      email: payload.email,
-      body: payload.comment,
-    }),
-  })
 
-  if (!response.ok) {
-    throw new Error(`Error fetching data: ${response.status}`)
-  }
-
-  return response.json()
-}
