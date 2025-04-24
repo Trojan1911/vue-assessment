@@ -20,12 +20,7 @@ const formFields = ref<CommentPayload>({
 const formKey = ref<number>(1)
 
 const handleSubmit = async (): Promise<void> => {
-  try {
     await postComment(formFields.value);
-
-  } catch (error) {
-    console.log(error)
-  }
 }
 </script>
 
