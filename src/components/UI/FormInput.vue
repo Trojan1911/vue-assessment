@@ -10,24 +10,31 @@ interface InputProps {
   modelValue: string
 }
 
-const props = defineProps<InputProps>()
+const props = withDefaults(defineProps<InputProps>(),{
+  inputType: 'text',
+  isRequired: false,
+  placeholder: '',
+})
+
+const { label, inputId, placeholder, isRequired, inputType, modelValue } = props
+
 const emit = defineEmits(['update:modelValue'])
 
-const { handleInputChange } =  useModelValueHandler(emit)
+const { handleInputChange } = useModelValueHandler(emit)
 </script>
 
 <template>
   <div class="my-2">
     <label :for="props.inputId" class="form-label fw-bold">
-      {{ props.label }}
+      {{ label }}
     </label>
 
     <input
       :value="modelValue"
-      :id="props.inputId"
+      :id="inputId"
       :placeholder="placeholder"
-      :required="props.isRequired"
-      :type="props.inputType"
+      :required="isRequired"
+      :type="inputType"
       class="form-control"
       @input="handleInputChange"
     />

@@ -56,8 +56,8 @@ const handleSubmit = async (): Promise<void> => {
 
         <div class="d-flex justify-content-center">
           <button class="btn btn-magenta col-8" type="submit">Submit comment</button>
-
         </div>
+
         <ErrorAlert class="my-2 text-center" v-if="postCommentError" :message="postCommentError" />
       </form>
     </div>

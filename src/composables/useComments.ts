@@ -15,6 +15,7 @@ export const useComments = () => {
     postComment: commentsStore.postAndSaveComment,
     fetchComments: commentsStore.getComments,
     toggleFormVisibility: commentsStore.toggleFormVisibility,
+    getUserComments: commentsStore.getUserComments,
     commentsFormVisible,
   }
 }

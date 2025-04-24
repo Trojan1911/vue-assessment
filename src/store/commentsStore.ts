@@ -56,7 +56,6 @@ export const useCommentsStore = defineStore('comments', () => {
     } catch (e) {
       postCommentError.value = `Could not save comment. ${e}`
       localStorage.removeItem('userComments');
-      commentsFormVisible.value = true
     }
   }
 
@@ -77,8 +76,6 @@ export const useCommentsStore = defineStore('comments', () => {
 
   const allComments = computed(() => [...userComments.value, ...comments.value])
 
-  getUserComments()
-
   return {
     userComments,
     allComments,
@@ -89,5 +86,6 @@ export const useCommentsStore = defineStore('comments', () => {
     postAndSaveComment,
     commentsFormVisible,
     toggleFormVisibility,
+    getUserComments
   }
 })

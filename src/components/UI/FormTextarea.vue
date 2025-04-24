@@ -16,6 +16,8 @@ const props = withDefaults(defineProps<textAreaProps>(), {
   rows: 4,
 })
 
+const { label, textareaId, placeholder, isRequired, rows, modelValue } = props
+
 const emit = defineEmits(['update:modelValue'])
 
 const { handleInputChange } =  useModelValueHandler(emit)
@@ -23,14 +25,14 @@ const { handleInputChange } =  useModelValueHandler(emit)
 
 <template>
   <div class="my-2">
-    <label :for="props.textareaId" class="form-label fw-bold"> {{ props.label }} </label>
+    <label :for="textareaId" class="form-label fw-bold"> {{ label }} </label>
     <textarea
-      :value="props.modelValue"
-      :placeholder="props.placeholder"
-      :required="props.isRequired"
+      :value="modelValue"
+      :placeholder="placeholder"
+      :required="isRequired"
       class="form-control"
-      :id="props.textareaId"
-      :rows="props.rows"
+      :id="textareaId"
+      :rows="rows"
       @input="handleInputChange"
     />
   </div>

@@ -5,11 +5,12 @@ import { useComments } from '@/composables/useComments.ts'
 import { onMounted } from 'vue'
 import ErrorAlert from '@/components/UI/ErrorAlert.vue'
 
-const { toggleFormVisibility, commentsFormVisible, userComments, fetchComments, allComments, fetchCommentsError } =
+const { toggleFormVisibility, commentsFormVisible, userComments, fetchComments, allComments, fetchCommentsError, getUserComments } =
   useComments()
 
 onMounted(() => {
   fetchComments()
+  getUserComments()
 })
 </script>
 
