@@ -2,18 +2,19 @@ import { useCommentsStore } from '@/store/commentsStore'
 import { storeToRefs } from 'pinia'
 
 export const useComments = () => {
-  const store = useCommentsStore()
-  const { allComments, isLoading, fetchCommentsError, userComments, commentsFormVisible } =
-    storeToRefs(store)
+  const commentsStore = useCommentsStore()
+  const { allComments, isLoading, fetchCommentsError, postCommentError, userComments, commentsFormVisible } =
+    storeToRefs(commentsStore)
 
   return {
     allComments,
     userComments,
     isLoading,
     fetchCommentsError,
-    postComment: store.postAndSaveComment,
-    fetchComments: store.getComments,
-    toggleFormVisibility: store.toggleFormVisibility,
+    postCommentError,
+    postComment: commentsStore.postAndSaveComment,
+    fetchComments: commentsStore.getComments,
+    toggleFormVisibility: commentsStore.toggleFormVisibility,
     commentsFormVisible,
   }
 }

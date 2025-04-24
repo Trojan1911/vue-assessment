@@ -2,8 +2,13 @@
 import CommentForm from '@/components/CommentForm.vue'
 import CommentsList from '@/components/CommentsList.vue'
 import { useComments } from '@/composables/useComments.ts'
+import { onMounted } from 'vue'
 
-const { toggleFormVisibility, commentsFormVisible, userComments } = useComments()
+const { toggleFormVisibility, commentsFormVisible, userComments, fetchComments, allComments } = useComments()
+
+onMounted(() => {
+  fetchComments()
+})
 </script>
 
 <template>
@@ -25,7 +30,7 @@ const { toggleFormVisibility, commentsFormVisible, userComments } = useComments(
       <CommentForm v-if="commentsFormVisible" />
     </transition>
 
-    <CommentsList />
+    <CommentsList :comments='allComments' />
   </div>
 </template>
 
