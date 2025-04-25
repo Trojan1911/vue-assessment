@@ -1,33 +1,32 @@
 <script setup lang="ts">
 import { useModelValueHandler } from '@/composables/useModelValueHandler.ts'
+import { useAttrs } from 'vue'
 
 interface textAreaProps {
   textareaId: string;
-  isRequired?: boolean;
-  label: string;
-  placeholder?: string;
   rows?: number;
+  label: string;
+  marginClasses?: string;
 }
 
 const props = withDefaults(defineProps<textAreaProps>(), {
-  isRequired: false,
-  placeholder: 'Put text here...',
   rows: 4,
+  marginClasses: 'my-2',
 })
 
-const { label, textareaId, placeholder, isRequired, rows } = props
+const { textareaId, rows, marginClasses } = props
 
 const emit = defineEmits(['update:modelValue'])
 
-const { handleInputChange } =  useModelValueHandler(emit)
+const { handleInputChange } = useModelValueHandler(emit)
+const attrs = useAttrs()
 </script>
 
 <template>
-  <div class="my-2">
+  <div :class="marginClasses">
     <label :for="textareaId" class="form-label fw-bold"> {{ label }} </label>
     <textarea
-      :placeholder="placeholder"
-      :required="isRequired"
+      v-bind="attrs"
       class="form-control"
       :id="textareaId"
       :rows="rows"

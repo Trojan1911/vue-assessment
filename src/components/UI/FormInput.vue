@@ -1,38 +1,35 @@
 <script setup lang="ts">
 import { useModelValueHandler } from '@/composables/useModelValueHandler.ts'
+import { useAttrs } from 'vue'
 
 interface InputProps {
-  inputType?: string
-  inputId: string
-  isRequired?: boolean
-  label: string
-  placeholder?: string
+  inputId: string;
+  label: string;
+  marginClasses?: string;
 }
 
-const props = withDefaults(defineProps<InputProps>(),{
-  inputType: 'text',
-  isRequired: false,
-  placeholder: '',
+const props = withDefaults(defineProps<InputProps>(), {
+  marginClasses: 'my-2',
 })
 
-const { label, inputId, placeholder, isRequired, inputType } = props
+const { label, inputId, marginClasses } = props
 
 const emit = defineEmits(['update:modelValue'])
 
+
+const attrs = useAttrs()
 const { handleInputChange } = useModelValueHandler(emit)
 </script>
 
 <template>
-  <div class="my-2">
-    <label :for="props.inputId" class="form-label fw-bold">
+  <div :class="marginClasses">
+    <label :for="inputId" class="form-label fw-bold">
       {{ label }}
     </label>
 
     <input
       :id="inputId"
-      :placeholder="placeholder"
-      :required="isRequired"
-      :type="inputType"
+      v-bind="attrs"
       class="form-control"
       @input="handleInputChange"
     />

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import UiCard from '@/components/UI/UiCard.vue'
 import type { Comment } from '../types/types.ts'
 
 interface Props {
@@ -9,12 +10,12 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div v-for="comment in comments" :key="comment.id" class="card my-2 col-12">
-    <div class="card-header">
+  <UiCard v-for="comment in comments" :key="comment.id" class="my-2 col-12">
+    <template #header>
       {{ comment.name }}
-    </div>
+    </template>
 
-    <div class="card-body">
+    <template #body>
       <div class="blockquote mb-0">
         <p>{{ comment.body }}</p>
 
@@ -22,6 +23,6 @@ defineProps<Props>()
           {{ comment.email }}
         </footer>
       </div>
-    </div>
-  </div>
+    </template>
+  </UiCard>
 </template>

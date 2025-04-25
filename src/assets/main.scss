@@ -1,6 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
 $primary: #fceff9;
 $magenta-team: #e20074;
+
+$theme-colors: map-merge(
+    $theme-colors,
+    (
+      "magenta": $magenta-team
+    )
+);
+
+@import "bootstrap";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
   font-family: "Roboto", sans-serif;
@@ -10,24 +23,4 @@ body {
 
 .custom-card {
   background: darken($primary, 1%);
-}
-
-.btn-magenta {
-  background: $magenta-team;
-  color: #fff;
-}
-
-.text-magenta {
-  color: $magenta-team;
-}
-
-.btn-magenta:hover,
-.btn-magenta:active,
-.btn-magenta:active:focus {
-  background: lighten($magenta-team, 10%);
-  color: #fff;
-}
-
-.btn-magenta:disabled {
-  background: darken($magenta-team, 10%);
 }

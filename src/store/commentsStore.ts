@@ -32,6 +32,7 @@ export const useCommentsStore = defineStore('comments', () => {
   }
 
   const postAndSaveComment = async (commentPayload: CommentPayload): Promise<void> => {
+    isLoading.value = true;
     try {
       const response: PostCommentResponse = await callApi<PostCommentResponse>(commentsUrl, {
         method: 'POST',
@@ -56,6 +57,8 @@ export const useCommentsStore = defineStore('comments', () => {
     } catch (e) {
       postCommentError.value = `Could not save comment. ${e}`
       localStorage.removeItem('userComments');
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -66,7 +69,7 @@ export const useCommentsStore = defineStore('comments', () => {
     try {
       const data = await callApi<Comment[]>(commentsUrl)
 
-      comments.value = data.reverse().slice(0, 10) // simplest way to display comments from the recent and get last ten - reverse the array and slice ten elements. I really know that is simple, but its working :P ID is from 1 to 500 and after posting is 501 so it means that the last ID is the newest comment. There is no Date data saved on API
+      comments.value = data.slice(-10).reverse() // simplest way to display comments from the recent and get last ten -  Slice the elements from the end, than reverse to display most recent on top. I really know that is simple, but its working ;)  ID is from 1 to 500 and after posting is 501 so it means that the last ID is the newest comment. There is no Date data saved on API
     } catch (e) {
       fetchCommentsError.value = `Could not fetch. ${e}`
     } finally {

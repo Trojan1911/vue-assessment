@@ -2,14 +2,15 @@
 import { ref } from 'vue'
 
 import { useComments } from '@/composables/useComments.ts'
-
 import type { CommentPayload } from '@/types/types.ts'
 
 import FormInput from '@/components/UI/FormInput.vue'
 import FormTextarea from '@/components/UI/FormTextarea.vue'
-import ErrorAlert from '@/components/UI/ErrorAlert.vue'
+import UiAlert from '@/components/UI/UiAlert.vue'
+import UiCard from '@/components/UI/UiCard.vue'
+import UiButton from '@/components/UI/UiButton.vue'
 
-const { postComment, postCommentError} = useComments()
+const { postComment, postCommentError, isLoading } = useComments()
 
 const formFields = ref<CommentPayload>({
   name: '',
@@ -18,22 +19,22 @@ const formFields = ref<CommentPayload>({
 })
 
 const handleSubmit = async (): Promise<void> => {
-    await postComment(formFields.value);
+  await postComment(formFields.value)
 }
 </script>
 
 <template>
-  <div class="card col-6 mb-3">
-    <div class="card-header">Please, be kind and respect the others</div>
+  <UiCard>
+    <template #header> Please, be kind and respect the others</template>
 
-    <div class="card-body">
+    <template #body>
       <form @submit.prevent="handleSubmit">
         <FormInput
           v-model="formFields.email"
           input-id="email"
           label="E-mail:"
-          input-type="email"
-          is-required
+          type="email"
+          required
           placeholder="name@example.com"
         />
 
@@ -43,7 +44,7 @@ const handleSubmit = async (): Promise<void> => {
           label="Name:"
           input-type="text"
           placeholder="name"
-          is-required
+          required
         />
 
         <FormTextarea
@@ -51,15 +52,21 @@ const handleSubmit = async (): Promise<void> => {
           textarea-id="message"
           label="Comment:"
           placeholder="Put your comment here..."
-          is-required
+          required
         />
 
         <div class="d-flex justify-content-center">
-          <button class="btn btn-magenta col-8" type="submit">Submit comment</button>
+          <UiButton button-variant="magenta" type="submit" :disabled="isLoading">
+            <span v-if="isLoading" class="spinner-border spinner-border-sm" aria-hidden="true" />
+
+            <span role="status"> {{ isLoading ? 'Loading...' : 'Submit Comment' }} </span>
+          </UiButton>
         </div>
       </form>
+    </template>
 
-      <ErrorAlert class="my-2 text-center" v-if="postCommentError" :message="postCommentError" />
-    </div>
-  </div>
+    <UiAlert class="my-2 text-center" alert-variant="danger" v-if="postCommentError">
+      {{ postCommentError }}
+    </UiAlert>
+  </UiCard>
 </template>

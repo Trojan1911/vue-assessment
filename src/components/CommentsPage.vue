@@ -3,7 +3,8 @@ import CommentForm from '@/components/CommentForm.vue'
 import CommentsList from '@/components/CommentsList.vue'
 import { useComments } from '@/composables/useComments.ts'
 import { onMounted } from 'vue'
-import ErrorAlert from '@/components/UI/ErrorAlert.vue'
+import UiAlert from '@/components/UI/UiAlert.vue'
+import UiButton from '@/components/UI/UiButton.vue'
 
 const {
   toggleFormVisibility,
@@ -24,28 +25,29 @@ onMounted(() => {
 
 <template>
   <div class="d-flex flex-column align-items-center gap-3">
-    <button
-      :disabled="userComments.length > 0"
-      @click="toggleFormVisibility"
-      type="button"
-      class="btn btn-magenta"
-    >
+    <UiButton :disabled="userComments.length > 0" @click="toggleFormVisibility" type="button">
       {{ commentsFormVisible ? 'Cancel' : 'Add your comment' }}
-    </button>
+    </UiButton>
 
-    <div v-if="userComments.length > 0" class="alert alert-light" role="alert">
+    <UiAlert v-if="userComments.length > 0" alertVariant="light">
       You already commented this. Only one comment per user allowed.
-    </div>
+    </UiAlert>
 
     <transition name="fade-slide">
-      <CommentForm v-if="commentsFormVisible" />
+      <CommentForm class="col-6 mb-3" v-if="commentsFormVisible" />
     </transition>
 
-    <div v-if="allComments.length === 0 && !fetchCommentsError && isLoading" class="spinner-border text-magenta" role="status">
+    <div
+      v-if="allComments.length === 0 && !fetchCommentsError && isLoading"
+      class="spinner-border text-magenta"
+      role="status"
+    >
       <span class="visually-hidden">Loading...</span>
     </div>
 
-    <ErrorAlert class="my-2 text-center" v-if="fetchCommentsError" :message="fetchCommentsError" />
+    <UiAlert class="my-2 text-center" alert-variant="danger" v-if="fetchCommentsError">
+      {{ fetchCommentsError }}
+    </UiAlert>
 
     <div
       v-if="!fetchCommentsError && allComments.length === 0 && !isLoading"
